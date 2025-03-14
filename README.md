@@ -1,46 +1,110 @@
 Game Engine Frame
 ===============
+
+原项目地址 https://github.com/ylmbtm/GameProject3 , 本仓库是可以在ubuntu22下轻松使用最新版本的库和工具进行编译，运行的代码仓库。
+
 跨平台的多进程游戏服务器框架，网络层分别使用SocketApi, Boost Asio, Libuv三种方式实现， 
 框架内使用共享内存，无锁队列，对象池，内存池来提高服务器性能。
 
 还有一个不断完善的Demo客户端，游戏包含大量完整资源，坐骑，宠物，伙伴，装备, 这些均可上阵和穿戴, 并可进入副本战斗，多人玩法也己实现,
-Demo客户端地址:https://github.com/ylmbtm/DemoClient
+Demo客户端地址: https://github.com/ylmbtm/DemoClient
 
- #### 服务器部署启动说明
- ##### 1.编译
-	Windows: 用VisualStudio2017以上版本打开打开解决方案直接进行编译。
-	Linux  : 执行buildall.sh脚本进行编译  
-##### 2.安装mysql
-	在机器上安装mysql数据,推荐版mysql5.7版, 安装完成之后，如果不想改配制文件,新建用户root,密码设为123456 (配制文件默认如此)。
-	然后工程里找到db_create.sql文件，在数据库中执行这个文件，这样完成数据库表就创建。
-##### 3.启动服务器
-	在完成上面两步这后， 在\Server目录下有一个StartServer.bat文件，执行bat文件， 然后按提示操作。
+## 服务器在ubuntu22部署启动说明
 
-#### 服务器角色说明
-	登录服务器(LoginServer)  说明 : 接受玩家的登录连接， 处理登录请求消息。
-	账号服务器(AccountServer)说明 : 处理账号登录的验证，新账号的创建，账号的数据库保存。
-	中心服务器(CenterServer) 说明 : 用于跨服活动， 跨服战需求。
-	逻辑服务器(LogicServer)  说明 : 处理玩家角色的逻辑数据，处理玩家角色的一般逻辑功能。
-	游戏服务器(GameServer)   说明 : 处理玩家移动同步，技能，buff等作战功能。
-	数据服务器(DBServer)     说明 : 作为逻辑服和mysql数据库之间的代理服务器，负责定期将玩家的数据写入数据库。
-	网关服务器(ProxyServer)  说明 : 作为客户端和逻辑服，战场服之间的中转服务器，主要负责消息的转发。
-	日志服务器(LogServer)    说明 : 日志服务器 主要负责逻辑服运营日志的写入mysql数据库。
-	监视服务器(WatchServer)  说明 : 主要负责接受WEB后台的控制命令， 控制服务器。
+[Ubuntu22](./Server/Src/Linux/linux_build.md)
 
-#### 文档与教程
-1.群友 Binaryhobart(450282550) 提供的视频搭建教程 [教程地址](https://www.bilibili.com/video/BV1k5411s7Vf?from=search&seid=3304544258866101487)
+环境准备
 
-gitee地址: https://gitee.com/ylmbtm/GameProject3
+```bash
+apt install gcc g++ make cmake -y
+apt install protobuf-compiler libprotobuf-dev -y
+apt install lua5.3
+apt install liblua5.3-dev
+apt install mysql-server
+apt install libmysqlclient-dev
+apt install libtolua++5.1-dev
+dpkg -L libtolua++5.1-dev | grep '\.h$'
 
-交流QQ群 : 962315897
-公众号:![public1](https://github.com/ylmbtm/resource/blob/master/20210818175029.png)
-![public1](https://wx1.sinaimg.cn/mw2000/002dp2Ulgy1gvofyue87sj6065065wf602.jpg)
+cd Proto
+sh gen_cpp.sh
+cd Server/Src
+sh buildall.sh
+```
 
+数据库环境
 
-#### 体验客户端效果(群文件中有全部客户端代码及资源)
-![login1](https://github.com/ylmbtm/resource/blob/master/01.png)
-![login2](https://github.com/ylmbtm/resource/blob/master/02.png)
-![login3](https://github.com/ylmbtm/resource/blob/master/03.png)
-![login4](https://github.com/ylmbtm/resource/blob/master/04.png)
+```bash
+cd Server
+mysql -uroot -p -h 127.0.0.1 < db_create.sql
+```
 
+各进程
 
+```bash
+root@kTY-HK3-QL-86139:/home/root/game/gameproject3# cd Server/Src/Linux
+root@kTY-HK3-QL-86139:/home/root/game/gameproject3/Server/Src/Linux# ll | grep Server
+-rwxr-xr-x  1 root root 13054592 Mar 14 04:09 AccountServer*
+-rwxr-xr-x  1 root root 11219816 Mar 14 04:09 CenterServer*
+-rwxr-xr-x  1 root root 12335648 Mar 14 04:09 DBServer*
+-rwxr-xr-x  1 root root 18504512 Mar 14 04:09 GameServer*
+-rwxr-xr-x  1 root root 11169072 Mar 14 04:09 LogServer*
+-rwxr-xr-x  1 root root 26672704 Mar 14 04:09 LogicServer*
+-rwxr-xr-x  1 root root 12183496 Mar 14 04:09 LoginServer*
+-rwxr-xr-x  1 root root 11228928 Mar 14 04:09 ProxyServer*
+```
+
+各进程日志在
+
+```bash
+root@kTY-HK3-QL-86139:/home/root/game/gameproject3/Server/Src/Linux/log# ll -lrt
+total 92
+drwxr-xr-x 6 root root  4096 Mar 14 06:16 ../
+-rw-r--r-- 1 root root   135 Mar 14 06:16 CenterServer-250314-061602.log
+-rw-r--r-- 1 root root   392 Mar 14 06:16 LogServer-250314-061602.log
+-rw-r--r-- 1 root root   466 Mar 14 06:16 DBServer-250314-061602.log
+-rw-r--r-- 1 root root   249 Mar 14 06:16 LogicServer-250314-061602.log
+-rw-r--r-- 1 root root   659 Mar 14 06:16 LoginServer-250314-061602.log
+-rw-r--r-- 1 root root   638 Mar 14 06:16 AccountServer-250314-061602.log
+-rw-r--r-- 1 root root 26306 Mar 14 06:16 GameServer-250314-061602.log
+-rw-r--r-- 1 root root   135 Mar 14 06:18 CenterServer-250314-061838.log
+drwx------ 2 root root  4096 Mar 14 06:18 ./
+-rw-r--r-- 1 root root   392 Mar 14 06:18 LogServer-250314-061838.log
+-rw-r--r-- 1 root root   249 Mar 14 06:18 LogicServer-250314-061838.log
+-rw-r--r-- 1 root root   466 Mar 14 06:18 DBServer-250314-061838.log
+-rw-r--r-- 1 root root   659 Mar 14 06:18 LoginServer-250314-061838.log
+-rw-r--r-- 1 root root   638 Mar 14 06:18 AccountServer-250314-061838.log
+-rw-r--r-- 1 root root  8191 Mar 14 06:18 GameServer-250314-061838.log
+```
+
+进程配置文件
+
+```bash
+root@kTY-HK3-QL-86139:/home/root/game/gameproject3/Server/Src/Linux# rm -rf ./*.o
+root@kTY-HK3-QL-86139:/home/root/game/gameproject3/Server/Src/Linux# ls
+AccountServer  LogServer    ProxyServer 
+CenterServer   LogicServer  Skill(技能配置xml)    
+Config.db(sqlite数据库文件)     LoginServer  log(日志目录)    servercfg.ini(各进程配置)
+DBServer       Lua(Lua脚本)     startserver.sh(启动所有进程)
+GameServer     Map(地图配置xml) stopserver.sh(关闭所有进程)
+```
+
+## 服务器各进程说明
+
+```bash
+1. 登录服务器(LoginServer)  说明 : 接受玩家的登录连接， 处理登录请求消息。
+2. 账号服务器(AccountServer)说明 : 处理账号登录的验证，新账号的创建，账号的数据库保存。
+3. 中心服务器(CenterServer) 说明 : 用于跨服活动， 跨服战需求。
+4. 逻辑服务器(LogicServer)  说明 : 处理玩家角色的逻辑数据，处理玩家角色的一般逻辑功能。
+5. 游戏服务器(GameServer)   说明 : 处理玩家移动同步，技能，buff等作战功能。
+6. 数据服务器(DBServer)     说明 : 作为逻辑服和mysql数据库之间的代理服务器，负责定期将玩家的数据写入数据库。
+7. 网关服务器(ProxyServer)  说明 : 作为客户端和逻辑服，战场服之间的中转服务器，主要负责消息的转发。
+8. 日志服务器(LogServer)    说明 : 日志服务器 主要负责逻辑服运营日志的写入mysql数据库。
+9. 监视服务器(WatchServer)  说明 : 主要负责接受WEB后台的控制命令， 控制服务器。
+```
+
+## 体验客户端效果
+
+![login1](./RepResource/01.png)
+![login2](./RepResource/02.png)
+![login3](./RepResource/03.png)
+![login4](./RepResource/04.png)
