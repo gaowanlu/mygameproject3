@@ -13,7 +13,7 @@ RUN apt-get install libtolua++5.1-dev -y
 RUN apt-get install sqlite3 -y
 RUN apt-get install libsqlite3-dev -y
 
-WORKDIR /mygameproject3/ Proto
+WORKDIR /mygameproject3/Proto
 RUN sh gen_cpp.sh
 
 WORKDIR /mygameproject3/Server/Src
