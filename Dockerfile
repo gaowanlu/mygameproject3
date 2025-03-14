@@ -15,11 +15,10 @@ RUN apt install sqlite3 -y
 RUN apt install libsqlite3-dev -y
 
 WORKDIR /mygameproject3
-cd Proto
-sh gen_cpp.sh
+RUN cd Proto && sh gen_cpp.sh
 
 WORKDIR /mygameproject3/Server/Src
-sh buildall.sh
+RUN sh buildall.sh
 
 ENTRYPOINT ["/bin/bash", "-c"]
 CMD ["echo end"]
