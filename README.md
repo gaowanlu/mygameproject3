@@ -101,10 +101,3 @@ GameServer     Map(地图配置xml) stopserver.sh(关闭所有进程)
 8. 日志服务器(LogServer)    说明 : 日志服务器 主要负责逻辑服运营日志的写入mysql数据库。
 9. 监视服务器(WatchServer)  说明 : 主要负责接受WEB后台的控制命令， 控制服务器。
 ```
-
-## 体验客户端效果
-
-![login1](./RepResource/01.png)
-![login2](./RepResource/02.png)
-![login3](./RepResource/03.png)
-![login4](./RepResource/04.png)
