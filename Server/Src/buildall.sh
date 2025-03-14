@@ -1,20 +1,20 @@
-cd ServerEngine && make -j2
+cd ServerEngine && make -j4
 cd ..
-cd CenterServer && make -j2
+cd CenterServer && make -j4
 cd ..
-cd GameServer && make -j2
+cd GameServer && make -j4
 cd ..
-cd LogicServer && make -j2
+cd LogicServer && make -j4
 cd ..
-cd LoginServer && make -j2
+cd LoginServer && make -j4
 cd ..
-cd ProxyServer && make -j2
+cd ProxyServer && make -j4
 cd ..
-cd AccountServer && make -j2
+cd AccountServer && make -j4
 cd ..
-cd DBServer && make -j2
+cd DBServer && make -j4
 cd ..
-cd LogServer && make -j2
+cd LogServer && make -j4
 cd ..
 cp ./CenterServer/CenterServer ./Linux/
 cp ./GameServer/GameServer ./Linux/

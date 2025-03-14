@@ -9,7 +9,15 @@ Game Engine Frame
 还有一个不断完善的Demo客户端，游戏包含大量完整资源，坐骑，宠物，伙伴，装备, 这些均可上阵和穿戴, 并可进入副本战斗，多人玩法也己实现,
 Demo客户端地址: https://github.com/ylmbtm/DemoClient
 
-## 服务器在ubuntu22部署启动说明
+## 使用 play-with-docker.com
+
+https://labs.play-with-docker.com/
+
+```bash
+docker run -it ubuntu:22.04
+```
+
+## 服务器在 Ubuntu22.04 部署启动说明
 
 [Ubuntu22](./Server/Src/Linux/linux_build.md)
 
@@ -18,14 +26,14 @@ Demo客户端地址: https://github.com/ylmbtm/DemoClient
 ```bash
 apt install gcc g++ make cmake -y
 apt install protobuf-compiler libprotobuf-dev -y
-apt install lua5.3
-apt install liblua5.3-dev
-apt install mysql-server
-apt install libmysqlclient-dev
-apt install libtolua++5.1-dev
+apt install lua5.3 -y
+apt install liblua5.3-dev -y
+apt install mysql-server -y
+apt install libmysqlclient-dev -y
+apt install libtolua++5.1-dev -y
 dpkg -L libtolua++5.1-dev | grep '\.h$'
-apt install sqlite3
-apt install libsqlite3-dev
+apt install sqlite3 -y
+apt install libsqlite3-dev -y
 
 cd Proto
 sh gen_cpp.sh
@@ -36,8 +44,13 @@ sh buildall.sh
 数据库环境
 
 ```bash
+mysql -u root
+CREATE USER 'root'@'127.0.0.1' IDENTIFIED BY '123456';
+SELECT User,Host FROM mysql.user WHERE User = 'root';
 cd Server
-mysql -uroot -p -h 127.0.0.1 < db_create.sql
+mysql -uroot < db_create.sql
+mysql -uroot
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' WITH GRANT OPTION;
 ```
 
 各进程
