@@ -24,6 +24,8 @@ apt install mysql-server
 apt install libmysqlclient-dev
 apt install libtolua++5.1-dev
 dpkg -L libtolua++5.1-dev | grep '\.h$'
+apt install sqlite3
+apt install libsqlite3-dev
 
 cd Proto
 sh gen_cpp.sh
