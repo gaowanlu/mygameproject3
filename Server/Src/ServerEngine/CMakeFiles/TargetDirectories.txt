@@ -1,0 +1,3 @@
+/home/root/game/gameproject3/Server/Src/ServerEngine/CMakeFiles/ServerEngine.dir
+/home/root/game/gameproject3/Server/Src/ServerEngine/CMakeFiles/edit_cache.dir
+/home/root/game/gameproject3/Server/Src/ServerEngine/CMakeFiles/rebuild_cache.dir
