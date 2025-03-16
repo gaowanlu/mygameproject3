@@ -6,8 +6,12 @@ Game Engine Frame
 跨平台的多进程游戏服务器框架，网络层分别使用SocketApi, Boost Asio, Libuv三种方式实现， 
 框架内使用共享内存，无锁队列，对象池，内存池来提高服务器性能。
 
+## Unity客户端
+
 还有一个不断完善的Demo客户端，游戏包含大量完整资源，坐骑，宠物，伙伴，装备, 这些均可上阵和穿戴, 并可进入副本战斗，多人玩法也己实现,
 Demo客户端地址: [https://github.com/ylmbtm/DemoClient](https://github.com/gaowanlu/DemoClient)
+
+## 为什么连不上公网服务器
 
 用Unity 2017.4.30f1打开unity工程，修改GTLauner将LoginIP Port改为自己服务器LoginServer的IP与端口号。
 公网IP客户端连不上的话，去修改gm数据库的server_list，修改ProxyServer端口号
@@ -23,18 +27,19 @@ mysql> select * from server_list;
 
 mysql> UPDATE server_list SET outer_ip='公网IP' where id=202;
 ```
+## 目前调试进度
 
-## 使用 play-with-docker.com
-
-https://labs.play-with-docker.com/
-
-```bash
-docker run -it ubuntu:22.04
-```
+卡在了创建角色，共享内存对象池使用时会系统崩溃。
 
 ## 服务器在 Ubuntu22.04 部署启动说明
 
 [Ubuntu22](./Server/Src/Linux/linux_build.md)
+
+可以用的Docker版本
+
+```bash
+docker run -it ubuntu:22.04
+```
 
 环境准备
 
