@@ -27,9 +27,16 @@ mysql> select * from server_list;
 
 mysql> UPDATE server_list SET outer_ip='公网IP' where id=202;
 ```
-## 目前调试进度
+## LogicServer启动时崩溃或者创角色时崩溃
 
-卡在了创建角色，共享内存对象池使用时会系统崩溃。
+可能是共享内存出了问题，关掉所有进程，删除相关共享内存，重启试试看。
+
+```bash
+# 查看系统中所有共享内存
+ipcs -m
+# 指定shm_id删除共享内存
+ipcrm -m shm_id
+```
 
 ## 服务器在 Ubuntu22.04 部署启动说明
 
