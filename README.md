@@ -7,7 +7,22 @@ Game Engine Frame
 框架内使用共享内存，无锁队列，对象池，内存池来提高服务器性能。
 
 还有一个不断完善的Demo客户端，游戏包含大量完整资源，坐骑，宠物，伙伴，装备, 这些均可上阵和穿戴, 并可进入副本战斗，多人玩法也己实现,
-Demo客户端地址: https://github.com/ylmbtm/DemoClient
+Demo客户端地址: [https://github.com/ylmbtm/DemoClient](https://github.com/gaowanlu/DemoClient)
+
+用Unity 2017.4.30f1打开unity工程，修改GTLauner将LoginIP Port改为自己服务器LoginServer的IP与端口号。
+公网IP客户端连不上的话，去修改gm数据库的server_list，修改ProxyServer端口号
+
+```bash
+mysql> select * from server_list;
++-----+--------------+-----------+----------+-------+-----------+------------+------------+-------------+----------+-------------+-------------+------------+----------+
+| id  | name         | outer_ip  | inner_ip | port  | http_port | watch_port | opentime   | corner_mark | svr_flag | min_version | max_version | check_chan | check_ip |
++-----+--------------+-----------+----------+-------+-----------+------------+------------+-------------+----------+-------------+-------------+------------+----------+
+| 202 | 苍海月明     | 127.0.0.1 | 0.0.0.0  | 30202 |     10202 |       NULL | 1741944625 |           0 |        1 | 1.0.0       | 9.0.0       | *          | *        |
++-----+--------------+-----------+----------+-------+-----------+------------+------------+-------------+----------+-------------+-------------+------------+----------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE server_list SET outer_ip='公网IP' where id=202;
+```
 
 ## 使用 play-with-docker.com
 
