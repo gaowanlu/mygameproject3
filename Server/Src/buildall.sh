@@ -16,6 +16,8 @@ cd DBServer && make -j4
 cd ..
 cd LogServer && make -j4
 cd ..
+cd WatchServer && make -j4
+cd ..
 cp ./CenterServer/CenterServer ./Linux/
 cp ./GameServer/GameServer ./Linux/
 cp ./LogicServer/LogicServer ./Linux/
@@ -24,5 +26,4 @@ cp ./ProxyServer/ProxyServer ./Linux/
 cp ./AccountServer/AccountServer ./Linux/
 cp ./DBServer/DBServer ./Linux/
 cp ./LogServer/LogServer ./Linux/
-
- 
+cp ./WatchServer/WatchServer ./Linux/

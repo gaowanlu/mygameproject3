@@ -19,6 +19,9 @@ echo "$!" > logic.pid
 nohup ./ProxyServer &
 echo "$!" > logic.pid
 
+nohup ./WatchServer &
+echo "$!" > watch.pid
+
 nohup ./GameServer id=1 port=9008 &
 echo "$!" > game1.pid
- 
+
