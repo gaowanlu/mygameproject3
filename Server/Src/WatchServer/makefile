@@ -4,11 +4,15 @@ CC_INCLUDE=-I/usr/include
 MY_INCLUDE=-I$(PWD) \
 		-I../ServerEngine \
 		-I../PublicData \
-		-I../../Common 
-					 
+		-I/usr/include/mysql \
+		-I/usr/include/lua5.3	\
+		-I/usr/include
+
 CC_LIB=-L/usr/lib \
 	-L/lib \
-	-lpthread -lprotobuf
+	-L/usr/lib64/mysql \
+	-L/usr/lib/mysql \
+	-lpthread -lprotobuf -lmysqlclient -lsqlite3 -llua5.3 -ldl
 			 
 MY_LIB=-L../Debug \
 	-L../Linux \
